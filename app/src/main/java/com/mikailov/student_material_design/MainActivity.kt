@@ -14,11 +14,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,8 +32,6 @@ import androidx.compose.ui.unit.dp
 import com.mikailov.student_material_design.data.Student
 import com.mikailov.student_material_design.data.students
 import com.mikailov.student_material_design.ui.theme.Student_Material_DesignTheme
-
-
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,7 +73,6 @@ fun StudentInformation(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-
     ) {
         Text(
             text = stringResource(studentName),
@@ -89,41 +86,49 @@ fun StudentInformation(
     }
 }
 
-
-
 @Composable
 fun StudentItem(
     student: Student,
     modifier: Modifier = Modifier
 ) {
-    Row(
+    Card(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
     ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            StudentIcon(
+                studentIcon = student.imageResourceId,
+                modifier = Modifier.weight(0.2f)
+            )
 
-        StudentIcon(
-            studentIcon = student.imageResourceId,
-            modifier = Modifier.weight(0.2f)
-        )
-
-
-        StudentInformation(
-            studentName = student.name,
-            studentAge = student.age,
-            modifier = Modifier.weight(0.8f)
-        )
+            StudentInformation(
+                studentName = student.name,
+                studentAge = student.age,
+                modifier = Modifier.weight(0.8f)
+            )
+        }
     }
 }
 
 @Composable
 fun StudentApp() {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        items(students) { student ->
-            StudentItem(student = student)
+    Scaffold { paddingValues ->
+        LazyColumn(
+            contentPadding = paddingValues,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            items(students) { student ->
+                StudentItem(
+                    student = student,
+                    modifier = Modifier.padding(
+                        dimensionResource(id = R.dimen.padding_small)
+                    )
+                )
+            }
         }
     }
 }
