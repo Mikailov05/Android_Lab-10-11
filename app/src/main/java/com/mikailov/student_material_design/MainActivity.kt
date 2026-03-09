@@ -64,7 +64,7 @@ fun StudentIcon(
             .clip(MaterialTheme.shapes.small),
         painter = painterResource(studentIcon),
         contentDescription = null,
-        contentScale = ContentScale.Crop // Добавлен параметр contentScale
+        contentScale = ContentScale.Crop
     )
 }
 
@@ -81,12 +81,12 @@ fun StudentInformation(
     ) {
         Text(
             text = stringResource(studentName),
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(bottom = 4.dp)
+            modifier = Modifier.padding(bottom = 4.dp),
+            style = MaterialTheme.typography.displayMedium // Изменено на displayMedium
         )
         Text(
             text = stringResource(R.string.years_old, studentAge),
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyLarge // Изменено на bodyLarge
         )
     }
 }

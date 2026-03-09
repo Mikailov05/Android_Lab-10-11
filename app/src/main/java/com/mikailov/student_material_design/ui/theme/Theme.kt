@@ -1,4 +1,5 @@
 package com.mikailov.student_material_design.ui.theme
+
 import android.app.Activity
 import android.os.Build
 import android.view.View
@@ -15,6 +16,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+
 private val LightColors = lightColorScheme(
     primary = md_theme_light_primary,
     onPrimary = md_theme_light_onPrimary,
@@ -46,6 +48,7 @@ private val LightColors = lightColorScheme(
     outlineVariant = md_theme_light_outlineVariant,
     scrim = md_theme_light_scrim,
 )
+
 private val DarkColors = darkColorScheme(
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,
@@ -77,6 +80,7 @@ private val DarkColors = darkColorScheme(
     outlineVariant = md_theme_dark_outlineVariant,
     scrim = md_theme_dark_scrim,
 )
+
 @Composable
 fun Student_Material_DesignTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -92,29 +96,34 @@ fun Student_Material_DesignTheme(
         darkTheme -> DarkColors
         else -> LightColors
     }
+
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
             setUpEdgeToEdge(view, darkTheme)
         }
     }
+
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = Typography, // Добавлен параметр typography
         shapes = Shapes,
         content = content
     )
 }
+
 private fun setUpEdgeToEdge(view: View, darkTheme: Boolean) {
     val window = (view.context as Activity).window
     WindowCompat.setDecorFitsSystemWindows(window, false)
     window.statusBarColor = Color.Transparent.toArgb()
+
     val navigationBarColor = when {
         Build.VERSION.SDK_INT >= 29 -> Color.Transparent.toArgb()
         Build.VERSION.SDK_INT >= 26 -> Color(0xFF, 0xFF, 0xFF, 0x63).toArgb()
         else -> Color(0x00, 0x00, 0x00, 0x50).toArgb()
     }
     window.navigationBarColor = navigationBarColor
+
     val controller = WindowCompat.getInsetsController(window, view)
     controller.isAppearanceLightStatusBars = !darkTheme
     controller.isAppearanceLightNavigationBars = !darkTheme
