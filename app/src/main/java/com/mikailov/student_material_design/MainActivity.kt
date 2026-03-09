@@ -18,10 +18,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -82,11 +85,11 @@ fun StudentInformation(
         Text(
             text = stringResource(studentName),
             modifier = Modifier.padding(bottom = 4.dp),
-            style = MaterialTheme.typography.displayMedium // Изменено на displayMedium
+            style = MaterialTheme.typography.displayMedium
         )
         Text(
             text = stringResource(R.string.years_old, studentAge),
-            style = MaterialTheme.typography.bodyLarge // Изменено на bodyLarge
+            style = MaterialTheme.typography.bodyLarge
         )
     }
 }
@@ -119,9 +122,42 @@ fun StudentItem(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun StudentTopAppBar(modifier: Modifier = Modifier) {
+    CenterAlignedTopAppBar(
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    modifier = Modifier
+                        .size(dimensionResource(R.dimen.image_size))
+                        .padding(dimensionResource(R.dimen.padding_small)),
+                    painter = painterResource(R.drawable.ic_student_logo),
+                    contentDescription = null
+                )
+                Text(
+                    text = stringResource(R.string.app_name),
+                    style = MaterialTheme.typography.displayLarge
+                )
+            }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary
+        ),
+        modifier = modifier
+    )
+}
+
 @Composable
 fun StudentApp() {
-    Scaffold { paddingValues ->
+    Scaffold(
+        topBar = {
+            StudentTopAppBar()
+        }
+    ) { paddingValues ->
         LazyColumn(
             contentPadding = paddingValues,
             modifier = Modifier.fillMaxSize()
